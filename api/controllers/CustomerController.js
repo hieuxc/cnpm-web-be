@@ -30,12 +30,12 @@ module.exports = {
   },
   changePassword: async (req, res) => {
     try {
-      let findCustomer = await Customer.findOne({ idCustomer: req.body.idCustomer })
+      let findCustomer = await Customer.findOne({ phone: req.body.phone })
       if (!findCustomer) return res.json({ e: 1, m: 'error' })
       let checkPassword = await bcrypt.compareSync(req.body.password, findCustomer.password)
       if (checkPassword) {
         let newPassword = await sails.helpers.hashPassword(req.body.newPassword)
-        await Customer.update({ idCustomer: req.body.idCustomer }).set({ password: newPassword })
+        await Customer.update({ phone: req.body.phone }).set({ password: newPassword })
         return res.json({ e: 0 })
       } else return res.json({ e: 1, m: 'error' })
     } catch (error) {
