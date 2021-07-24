@@ -6,7 +6,14 @@
  */
 
 module.exports = {
-  
-
+  createListOrderProductDetail: async (orderProductDetails) => {
+    try {
+      for (let orderProductDetail of orderProductDetails) {
+        await ProductOrderDetail.create(orderProductDetail);
+      }
+      return "success";
+    } catch (error) {
+      return "error";
+    }
+  },
 };
-
